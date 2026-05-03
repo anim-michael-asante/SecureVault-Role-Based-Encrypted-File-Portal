@@ -1,0 +1,166 @@
+{% extends 'core/base_dashboard.html' %}
+{% block title %}Admin Dashboard — SecureVault{% endblock %}
+
+{% block sidebar_nav %}
+<a href="{% url 'admin_dashboard' %}" class="nav-item active">
+  <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+  Dashboard
+</a>
+<a href="{% url 'upload_file' %}" class="nav-item">
+  <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+  Upload File
+</a>
+<a href="{% url 'manage_users' %}" class="nav-item">
+  <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+  Manage Users
+  {% if total_users %}<span class="nav-badge">{{ total_users }}</span>{% endif %}
+</a>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="page-header">
+  <div>
+    <div class="page-title">Dashboard</div>
+    <div class="page-subtitle">Manage encrypted files and user access.</div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <a href="{% url 'upload_file' %}" class="btn-primary">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+      Upload File
+    </a>
+    <a href="{% url 'manage_users' %}" class="btn-outline">Manage Users</a>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card accent-card">
+    <div class="stat-card-header">
+      <div class="stat-card-label">Total Files</div>
+      <div class="stat-icon" style="background:rgba(255,255,255,0.15);">
+        <svg viewBox="0 0 24 24" style="stroke:white;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      </div>
+    </div>
+    <div class="stat-card-value">{{ total_files }}</div>
+    <div class="stat-link">
+      <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4"/></svg>
+      Encrypted &amp; secured
+    </div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-header">
+      <div class="stat-card-label">Total Users</div>
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+      </div>
+    </div>
+    <div class="stat-card-value">{{ total_users }}</div>
+    <div class="stat-link">Registered accounts</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-header">
+      <div class="stat-card-label">Total Downloads</div>
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+      </div>
+    </div>
+    <div class="stat-card-value">{{ total_downloads }}</div>
+    <div class="stat-link">File access events</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-card-header">
+      <div class="stat-card-label">Departments</div>
+      <div class="stat-icon">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+      </div>
+    </div>
+    <div class="stat-card-value">{{ dept_stats|length }}</div>
+    <div class="stat-link">Active departments</div>
+  </div>
+</div>
+
+<div class="grid-3" style="margin-bottom: 24px;">
+  <div class="card" style="padding: 24px;">
+    <div class="section-title" style="margin-bottom:4px;">Recent Files</div>
+    <div class="section-subtitle">Latest uploaded encrypted documents</div>
+    {% if recent_files %}
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>File</th>
+            <th>Access</th>
+            <th>Downloads</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for file in recent_files %}
+          <tr>
+            <td>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div class="file-icon">
+                  <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <div>
+                  <div style="font-weight:600;font-size:13px;">{{ file.title }}</div>
+                  <div style="font-size:11px;color:var(--text-muted);">{{ file.original_filename }}</div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="badge badge-green">{{ file.get_allowed_department_display }}</span>
+              <br><span style="font-size:11px;color:var(--text-muted);">{{ file.get_allowed_role_display }}</span>
+            </td>
+            <td style="font-weight:600;">{{ file.download_count }}</td>
+            <td>
+              <form method="POST" action="{% url 'delete_file' file.id %}" style="display:inline;" onsubmit="return confirm('Delete this file?')">
+                {% csrf_token %}
+                <button type="submit" class="action-btn action-btn-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg></div>
+      <p style="font-weight:600;margin-bottom:4px;">No files uploaded yet</p>
+      <p style="font-size:13px;">Upload your first encrypted file to get started.</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="card" style="padding: 24px;">
+    <div class="section-title" style="margin-bottom:4px;">Access Log</div>
+    <div class="section-subtitle">Recent file activity</div>
+    {% if recent_logs %}
+    <div style="display:flex;flex-direction:column;gap:0;">
+      {% for log in recent_logs %}
+      <div style="padding:10px 0;border-bottom:1px solid var(--surface-3);display:flex;align-items:center;gap:10px;">
+        <div style="width:28px;height:28px;background:var(--green-50);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="var(--green-600)" stroke-width="2">
+            {% if log.action == 'download' %}
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+            {% else %}
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            {% endif %}
+          </svg>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ log.file.title }}</div>
+          <div style="font-size:11px;color:var(--text-muted);">{{ log.user.get_full_name }} · {{ log.action }}</div>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);flex-shrink:0;">{{ log.accessed_at|date:"M d" }}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state" style="padding:30px 0;">
+      <p style="font-size:13px;">No access activity yet.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

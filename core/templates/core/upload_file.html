@@ -1,0 +1,139 @@
+{% extends 'core/base_dashboard.html' %}
+{% block title %}Upload File — SecureVault{% endblock %}
+
+{% block sidebar_nav %}
+<a href="{% url 'admin_dashboard' %}" class="nav-item">
+  <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+  Dashboard
+</a>
+<a href="{% url 'upload_file' %}" class="nav-item active">
+  <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+  Upload File
+</a>
+<a href="{% url 'manage_users' %}" class="nav-item">
+  <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+  Manage Users
+</a>
+{% endblock %}
+
+{% block extra_head %}
+{{ block.super }}
+<style>
+  .upload-zone {
+    border: 2px dashed var(--border);
+    border-radius: 14px;
+    padding: 48px 32px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--surface-2);
+  }
+  .upload-zone:hover, .upload-zone.dragover { border-color: var(--green-400); background: var(--green-50); }
+  .upload-zone input { display: none; }
+  .upload-icon { width: 52px; height: 52px; background: white; border: 1.5px solid var(--border); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+  .upload-icon svg { width: 24px; height: 24px; stroke: var(--green-600); fill: none; stroke-width: 1.5; }
+  .upload-filename { font-size: 14px; font-weight: 600; color: var(--green-700); margin-top: 8px; }
+  .form-section { background: white; border-radius: 16px; border: 1px solid var(--border); padding: 28px; max-width: 720px; }
+  .form-section-title { font-size: 16px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+  .form-section-title::before { content: ''; display: block; width: 4px; height: 18px; background: var(--green-600); border-radius: 2px; }
+  .encrypt-badge { display: flex; align-items: center; gap: 8px; background: var(--green-50); border: 1px solid var(--green-200); border-radius: 10px; padding: 12px 16px; font-size: 13px; color: var(--green-700); font-weight: 500; margin-bottom: 24px; }
+</style>
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="page-header">
+  <div>
+    <div class="page-title">Upload Encrypted File</div>
+    <div class="page-subtitle">Files are AES-256 encrypted before storage. Set access attributes to control visibility.</div>
+  </div>
+  <a href="{% url 'admin_dashboard' %}" class="btn-outline">← Back</a>
+</div>
+
+<form method="POST" enctype="multipart/form-data" style="max-width:720px;">
+  {% csrf_token %}
+  <div class="form-section" style="margin-bottom:20px;">
+    <div class="form-section-title">Select File</div>
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+      <input type="file" name="file" id="fileInput" required>
+      <div class="upload-icon">
+        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+      </div>
+      <div style="font-weight:600;font-size:15px;margin-bottom:4px;">Drop your file here</div>
+      <div style="font-size:13px;color:var(--text-muted);">or click to browse — any file type supported</div>
+      <div class="upload-filename" id="fileName" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div class="form-section" style="margin-bottom:20px;">
+    <div class="form-section-title">File Details</div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="form-group">
+        <label class="form-label">Document Title</label>
+        <input type="text" name="title" class="form-input" placeholder="e.g. Q4 Financial Report" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description <span style="font-weight:400;color:var(--text-muted);">(optional)</span></label>
+        <textarea name="description" class="form-input" rows="3" placeholder="Brief description of the document contents..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-section" style="margin-bottom:24px;">
+    <div class="form-section-title">Access Attributes</div>
+    <div class="encrypt-badge">
+      <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+      Only users matching BOTH the department AND role below will see this file.
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div class="form-group">
+        <label class="form-label">Allowed Department</label>
+        <select name="allowed_department" class="form-input" required>
+          <option value="">Select department</option>
+          {% for val, label in form.fields.allowed_department.choices %}
+          {% if val %}<option value="{{ val }}">{{ label }}</option>{% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Allowed Role</label>
+        <select name="allowed_role" class="form-input" required>
+          <option value="">Select role</option>
+          {% for val, label in form.fields.allowed_role.choices %}
+          {% if val %}<option value="{{ val }}">{{ label }}</option>{% endif %}
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn-primary" style="padding:14px 32px;font-size:15px;">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+    Encrypt &amp; Upload
+  </button>
+</form>
+
+<script>
+const fileInput = document.getElementById('fileInput');
+const fileName = document.getElementById('fileName');
+const zone = document.getElementById('uploadZone');
+
+fileInput.addEventListener('change', () => {
+  if (fileInput.files[0]) {
+    fileName.textContent = '✓ ' + fileInput.files[0].name;
+    fileName.style.display = 'block';
+  }
+});
+
+zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dragover'); });
+zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+zone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  zone.classList.remove('dragover');
+  fileInput.files = e.dataTransfer.files;
+  if (fileInput.files[0]) {
+    fileName.textContent = '✓ ' + fileInput.files[0].name;
+    fileName.style.display = 'block';
+  }
+});
+</script>
+{% endblock %}

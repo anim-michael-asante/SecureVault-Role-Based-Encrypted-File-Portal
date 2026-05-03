@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}SecureVault{% endblock %}</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-950: #0a1f0e;
+    --green-900: #0f2d14;
+    --green-800: #14401c;
+    --green-700: #1a5224;
+    --green-600: #1e6b2c;
+    --green-500: #22843a;
+    --green-400: #2ba048;
+    --green-300: #3dbf5a;
+    --green-200: #7dd99a;
+    --green-100: #c3f0ce;
+    --green-50: #edfaf1;
+    --accent: #22843a;
+    --accent-light: #3dbf5a;
+    --text-primary: #0f1f13;
+    --text-secondary: #4a6552;
+    --text-muted: #8aaa95;
+    --border: #d4e8da;
+    --surface: #ffffff;
+    --surface-2: #f5faf7;
+    --surface-3: #edf5f0;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--surface-2); color: var(--text-primary); }
+  a { text-decoration: none; color: inherit; }
+  input, select, textarea, button { font-family: inherit; }
+  .btn-primary {
+    background: var(--green-700);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary:hover { background: var(--green-800); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,82,36,0.3); }
+  .btn-outline {
+    background: transparent;
+    color: var(--green-700);
+    border: 1.5px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--green-400); background: var(--green-50); }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-label { font-size: 13px; font-weight: 600; color: var(--text-secondary); letter-spacing: 0.02em; }
+  .form-input {
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 14px;
+    color: var(--text-primary);
+    background: var(--surface);
+    transition: all 0.2s;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--green-500); box-shadow: 0 0 0 3px rgba(34,132,58,0.1); }
+  .form-input::placeholder { color: var(--text-muted); }
+  .card {
+    background: var(--surface);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .badge-green { background: var(--green-50); color: var(--green-700); border: 1px solid var(--green-200); }
+  .badge-amber { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+  .badge-red { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+  .messages-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+  .message {
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    animation: slideIn 0.3s ease;
+    max-width: 360px;
+  }
+  .message-success { background: var(--green-700); color: white; }
+  .message-error { background: #dc2626; color: white; }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+</style>
+{% block extra_head %}{% endblock %}
+</head>
+<body>
+{% if messages %}
+<div class="messages-container">
+  {% for message in messages %}
+  <div class="message message-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+</div>
+<script>setTimeout(() => document.querySelectorAll('.message').forEach(m => m.style.opacity='0'), 4000);</script>
+{% endif %}
+{% block content %}{% endblock %}
+</body>
+</html>

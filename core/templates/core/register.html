@@ -1,0 +1,140 @@
+{% extends 'core/base.html' %}
+{% block title %}Create Account — SecureVault{% endblock %}
+{% block extra_head %}
+<style>
+  body { display: flex; min-height: 100vh; background: #f0f7f2; }
+  .auth-wrapper { display: flex; width: 100%; min-height: 100vh; background: white; }
+  .auth-left { flex: 0 0 560px; padding: 48px 64px; display: flex; flex-direction: column; justify-content: space-between; background: white; overflow-y: auto; }
+  .auth-right {
+    flex: 1;
+    background: linear-gradient(135deg, #0f2d14 0%, #1a5224 45%, #22843a 100%);
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    padding: 64px; position: relative; overflow: hidden;
+  }
+  .auth-right::before { content: ''; position: absolute; width: 500px; height: 500px; border-radius: 50%; background: rgba(61,191,90,0.07); top: -150px; right: -150px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--green-800); }
+  .logo-icon { width: 36px; height: 36px; background: var(--green-700); border-radius: 10px; display: flex; align-items: center; justify-content: center; }
+  .auth-title { font-size: 30px; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 6px; }
+  .auth-subtitle { font-size: 14px; color: var(--text-muted); margin-bottom: 32px; }
+  .auth-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .btn-primary { width: 100%; justify-content: center; padding: 14px; font-size: 15px; border-radius: 12px; }
+  .login-link { font-size: 13px; color: var(--text-muted); text-align: center; margin-top: 8px; }
+  .login-link a { color: var(--green-600); font-weight: 600; }
+  .auth-footer { font-size: 12px; color: var(--text-muted); }
+  .auth-footer a { color: var(--green-600); }
+  .error-msg { font-size: 12px; color: #dc2626; margin-top: 4px; }
+  .right-headline { font-family: 'Instrument Serif', serif; font-size: 38px; color: white; line-height: 1.15; margin-bottom: 14px; position: relative; z-index: 1; }
+  .right-sub { font-size: 14px; color: rgba(255,255,255,0.6); position: relative; z-index: 1; margin-bottom: 40px; }
+  .feature-list { display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 1; }
+  .feature-item { display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,0.85); font-size: 14px; }
+  .feature-check { width: 28px; height: 28px; background: rgba(255,255,255,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="auth-wrapper">
+  <div class="auth-left">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+        </svg>
+      </div>
+      SecureVault
+    </div>
+
+    <div style="flex:1; display:flex; flex-direction:column; justify-content:center; max-width: 440px;">
+      <h1 class="auth-title">Create Your Account</h1>
+      <p class="auth-subtitle">Fill in your details to request access to your team's secure portal.</p>
+
+      <form class="auth-form" method="POST">
+        {% csrf_token %}
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" name="first_name" class="form-input" placeholder="John" value="{{ form.first_name.value|default:'' }}" required>
+            {% if form.first_name.errors %}<div class="error-msg">{{ form.first_name.errors.0 }}</div>{% endif %}
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" name="last_name" class="form-input" placeholder="Doe" value="{{ form.last_name.value|default:'' }}" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" name="email" class="form-input" placeholder="you@company.com" value="{{ form.email.value|default:'' }}" required>
+          {% if form.email.errors %}<div class="error-msg">{{ form.email.errors.0 }}</div>{% endif %}
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Department</label>
+            <select name="department" class="form-input" required>
+              <option value="">Select department</option>
+              {% for val, label in form.fields.department.choices %}
+              {% if val %}<option value="{{ val }}" {% if form.department.value == val %}selected{% endif %}>{{ label }}</option>{% endif %}
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Role</label>
+            <select name="role" class="form-input" required>
+              <option value="">Select role</option>
+              {% for val, label in form.fields.role.choices %}
+              {% if val %}<option value="{{ val }}" {% if form.role.value == val %}selected{% endif %}>{{ label }}</option>{% endif %}
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-input" placeholder="••••••••" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" name="confirm_password" class="form-input" placeholder="••••••••" required>
+          </div>
+        </div>
+        {% if form.non_field_errors %}
+        <div class="error-msg">{{ form.non_field_errors.0 }}</div>
+        {% endif %}
+        <button type="submit" class="btn-primary">Create Account</button>
+      </form>
+      <p class="login-link">Already have an account? <a href="{% url 'login' %}">Sign In</a></p>
+    </div>
+
+    <div class="auth-footer">Copyright &copy; 2025 SecureVault &nbsp;·&nbsp; <a href="#">Privacy Policy</a></div>
+  </div>
+
+  <div class="auth-right">
+    <h2 class="right-headline">Access the right files,<br>at the right time.</h2>
+    <p class="right-sub">Your department and role determine which encrypted<br>documents are visible to you — nothing more.</p>
+    <div class="feature-list">
+      <div class="feature-item">
+        <div class="feature-check">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#3dbf5a" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        AES-256 encryption on every file
+      </div>
+      <div class="feature-item">
+        <div class="feature-check">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#3dbf5a" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        Role &amp; department-based access control
+      </div>
+      <div class="feature-item">
+        <div class="feature-check">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#3dbf5a" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        Complete audit trail of all downloads
+      </div>
+      <div class="feature-item">
+        <div class="feature-check">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#3dbf5a" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        Admin-managed file distribution
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
