@@ -1,4 +1,4 @@
-# SecureVault — Enterprise Role-Based Encrypted File Portal
+﻿# SecureVault — Enterprise Role-Based Encrypted File Portal
 
 ![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square)
 ![Django](https://img.shields.io/badge/Django-4.2+-green?style=flat-square)
@@ -843,5 +843,6 @@ For issues, questions, or suggestions:
 ---
 
 **Made with ❤️ | Last Updated: May 2026**
-#   S e c u r e V a u l t - R o l e - B a s e d - E n c r y p t e d - F i l e - P o r t a l  
+#   S e c u r e V a u l t - R o l e - B a s e d - E n c r y p t e d - F i l e - P o r t a l 
+ 
  
