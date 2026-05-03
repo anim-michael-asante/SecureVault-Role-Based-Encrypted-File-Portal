@@ -6,11 +6,14 @@
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=flat-square)
 ![Encryption](https://img.shields.io/badge/Encryption-AES--256-red?style=flat-square)
 
-![alt text](image.png)
-![alt text](image-1.png)
-![alt text](image-2.png)
-![alt text](image-3.png)
-![alt text](image-4.png)
+<img width="1412" height="924" alt="image" src="https://github.com/user-attachments/assets/3275314d-9f6a-46a8-9766-843ce7a52d4c" />
+<img width="1609" height="927" alt="image" src="https://github.com/user-attachments/assets/a07e822a-aacb-458e-adbe-fa69412c3df8" />
+<img width="1813" height="922" alt="image" src="https://github.com/user-attachments/assets/2c3a7fb2-2f08-41bc-838a-7aded7faf358" />
+<img width="1740" height="922" alt="image" src="https://github.com/user-attachments/assets/ced2d9da-cbfc-47d3-b37d-622c8dd62a8e" />
+
+
+
+
 
 > A secure, production-ready Django web application for enterprise document management with AES-256 encryption and granular role-based access control.
 
@@ -40,7 +43,7 @@
 
 ## Features
 
-### 🔐 Security
+### Security
 
 - **AES-256 Encryption** — Military-grade Fernet symmetric encryption for all uploaded files
 - **Master Key Derivation** — PBKDF2-HMAC-SHA256 with 100,000 iterations for key hardening
@@ -48,7 +51,7 @@
 - **Access Logging** — Complete audit trail of all file downloads and user actions
 - **Secure Password Hashing** — Django's PBKDF2 password hashing with salt
 
-### 👥 User Management
+### User Management
 
 - **Admin Portal** — Comprehensive administrative dashboard for user and file management
 - **User Self-Registration** — New users can register with department and role selection
@@ -56,7 +59,7 @@
 - **Department/Role Framework** — 8 departments × 9 roles for flexible organizational structures
 - **Activity Tracking** — View download statistics and access logs per user
 
-### 📁 File Management
+###  File Management
 
 - **Multi-Format Support** — Upload any file type with automatic encryption
 - **Access Control Rules** — Files visible only to users matching specified department + role
@@ -64,7 +67,7 @@
 - **On-The-Fly Decryption** — Files decrypted securely only when downloaded
 - **Unique Encryption Keys** — Each file encrypted with its own key, then key encrypted with master key
 
-### 📊 Monitoring & Analytics
+### Monitoring & Analytics
 
 - **Access Logs** — Timestamp, user, file, and IP address for every download
 - **Download Statistics** — Track file popularity and access patterns
@@ -263,11 +266,11 @@ python manage.py changepassword admin@securevault.com
 > ⚠️ **Critical:** Update the master key in `core/encryption.py` before going to production.
 
 ```python
-# ❌ DO NOT USE IN PRODUCTION
+#  DO NOT USE IN PRODUCTION
 MASTER_PASSWORD = b"securevault-master-key-2025"
 MASTER_SALT = b"securevault-salt"
 
-# ✅ Use environment variables instead
+#  Use environment variables instead
 import os
 MASTER_PASSWORD = os.getenv('MASTER_PASSWORD').encode()
 MASTER_SALT = os.getenv('MASTER_SALT').encode()
