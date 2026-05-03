@@ -1,11 +1,20 @@
-﻿# SecureVault — Enterprise Role-Based Encrypted File Portal
+# SecureVault — Enterprise Role-Based Encrypted File Portal
 
-![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square)
-![Django](https://img.shields.io/badge/Django-4.2+-green?style=flat-square)
+![Python](https://img.shields.io/badge/Python-3.11+-blue?style=flat-square&logo=python&logoColor=white)
+![Django](https://img.shields.io/badge/Django-4.2+-green?style=flat-square&logo=django&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-gray?style=flat-square)
 ![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=flat-square)
+![Encryption](https://img.shields.io/badge/Encryption-AES--256-red?style=flat-square)
 
-A secure, production-ready Django web application for enterprise document management. SecureVault enables administrators to upload and manage AES-256 encrypted files with granular department and role-based access controls. Users access only files matching their organizational attributes with automatic on-the-fly decryption.
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+
+> A secure, production-ready Django web application for enterprise document management with AES-256 encryption and granular role-based access control.
+
+---
 
 ## Table of Contents
 
@@ -24,6 +33,7 @@ A secure, production-ready Django web application for enterprise document manage
 - [Development](#development)
 - [Deployment](#deployment)
 - [Troubleshooting](#troubleshooting)
+- [Departments & Roles](#departments--roles)
 - [License](#license)
 
 ---
@@ -32,33 +42,33 @@ A secure, production-ready Django web application for enterprise document manage
 
 ### 🔐 Security
 
-- **AES-256 Encryption**: Military-grade encryption for all uploaded files using Fernet (symmetric encryption)
-- **Master Key Derivation**: PBKDF2-HMAC-SHA256 with 100,000 iterations for key hardening
-- **Role-Based Access Control (RBAC)**: Fine-grained permissions based on department and role
-- **Access Logging**: Complete audit trail of all file downloads and user actions
-- **Secure Password Hashing**: Django's PBKDF2 password hashing with salt
+- **AES-256 Encryption** — Military-grade Fernet symmetric encryption for all uploaded files
+- **Master Key Derivation** — PBKDF2-HMAC-SHA256 with 100,000 iterations for key hardening
+- **Role-Based Access Control (RBAC)** — Fine-grained permissions based on department and role
+- **Access Logging** — Complete audit trail of all file downloads and user actions
+- **Secure Password Hashing** — Django's PBKDF2 password hashing with salt
 
 ### 👥 User Management
 
-- **Admin Portal**: Comprehensive administrative dashboard for user and file management
-- **User Self-Registration**: New users can register with department and role selection
-- **User Lifecycle**: Suspend/activate user accounts without deletion
-- **Department/Role Framework**: 8 departments × 9 roles for flexible organizational structures
-- **Activity Tracking**: View download statistics and access logs per user
+- **Admin Portal** — Comprehensive administrative dashboard for user and file management
+- **User Self-Registration** — New users can register with department and role selection
+- **User Lifecycle** — Suspend/activate user accounts without deletion
+- **Department/Role Framework** — 8 departments × 9 roles for flexible organizational structures
+- **Activity Tracking** — View download statistics and access logs per user
 
 ### 📁 File Management
 
-- **Multi-Format Support**: Upload any file type with automatic encryption
-- **Access Control Rules**: Files visible only to users matching specified department + role
-- **Metadata Management**: Store file title, description, upload date, and access counts
-- **On-The-Fly Decryption**: Files decrypted securely only when downloaded
-- **Unique Encryption Keys**: Each file encrypted with unique key, then key encrypted with master key
+- **Multi-Format Support** — Upload any file type with automatic encryption
+- **Access Control Rules** — Files visible only to users matching specified department + role
+- **Metadata Management** — Store file title, description, upload date, and access counts
+- **On-The-Fly Decryption** — Files decrypted securely only when downloaded
+- **Unique Encryption Keys** — Each file encrypted with its own key, then key encrypted with master key
 
 ### 📊 Monitoring & Analytics
 
-- **Access Logs**: Timestamp, user, file, and IP address for every download
-- **Download Statistics**: Track file popularity and access patterns
-- **User Activity Dashboard**: Monitor user engagement and suspicious access
+- **Access Logs** — Timestamp, user, file, and IP address for every download
+- **Download Statistics** — Track file popularity and access patterns
+- **User Activity Dashboard** — Monitor user engagement and suspicious access
 
 ---
 
@@ -70,29 +80,29 @@ A secure, production-ready Django web application for enterprise document manage
 └──────────────────┬──────────────────────────────────────────┘
                    │ HTTP/HTTPS
 ┌──────────────────▼──────────────────────────────────────────┐
-│              Django Web Application                          │
-│  ┌──────────────────┬──────────────────────────────────────┐ │
-│  │   URL Router     │   Views & Forms                       │ │
-│  │  (urls.py)       │   (views.py, forms.py)                │ │
-│  └──────────────────┴──────────────────────────────────────┘ │
-│  ┌──────────────────────────────────────────────────────────┐ │
-│  │  Authentication & Authorization (Django Auth + Custom)   │ │
-│  │  • Session-based authentication                          │ │
-│  │  • Department/role-based access control                  │ │
-│  │  • User permission enforcement                           │ │
-│  └──────────────────────────────────────────────────────────┘ │
-│  ┌──────────────────────────────────────────────────────────┐ │
-│  │  Models Layer (models.py)                                │ │
-│  │  • User (custom with email auth)                         │ │
-│  │  • EncryptedFile (metadata + encrypted blob)            │ │
-│  │  • FileAccessLog (audit trail)                          │ │
-│  └──────────────────────────────────────────────────────────┘ │
-│  ┌──────────────────────────────────────────────────────────┐ │
-│  │  Encryption Engine (encryption.py)                       │ │
-│  │  • PBKDF2 master key derivation                          │ │
-│  │  • Fernet symmetric encryption/decryption                │ │
-│  │  • Per-file unique key generation                        │ │
-│  └──────────────────────────────────────────────────────────┘ │
+│                  Django Web Application                      │
+│  ┌──────────────────┬───────────────────────────────────┐   │
+│  │   URL Router     │   Views & Forms                   │   │
+│  │   (urls.py)      │   (views.py, forms.py)            │   │
+│  └──────────────────┴───────────────────────────────────┘   │
+│  ┌───────────────────────────────────────────────────────┐   │
+│  │  Authentication & Authorization (Django Auth + RBAC)  │   │
+│  │  • Session-based authentication                       │   │
+│  │  • Department/role-based access control               │   │
+│  │  • User permission enforcement                        │   │
+│  └───────────────────────────────────────────────────────┘   │
+│  ┌───────────────────────────────────────────────────────┐   │
+│  │  Models Layer (models.py)                             │   │
+│  │  • User (custom with email auth)                      │   │
+│  │  • EncryptedFile (metadata + encrypted blob)          │   │
+│  │  • FileAccessLog (audit trail)                        │   │
+│  └───────────────────────────────────────────────────────┘   │
+│  ┌───────────────────────────────────────────────────────┐   │
+│  │  Encryption Engine (encryption.py)                    │   │
+│  │  • PBKDF2 master key derivation                       │   │
+│  │  • Fernet symmetric encryption/decryption             │   │
+│  │  • Per-file unique key generation                     │   │
+│  └───────────────────────────────────────────────────────┘   │
 └──────────────────┬──────────────────────────────────────────┘
                    │
         ┌──────────┴──────────────┐
@@ -111,14 +121,14 @@ A secure, production-ready Django web application for enterprise document manage
 
 ## Tech Stack
 
-| Layer                 | Technology                           | Version |
-| --------------------- | ------------------------------------ | ------- |
-| **Backend Framework** | Django                               | 4.2+    |
-| **Cryptography**      | cryptography (Fernet)                | 41.0+   |
-| **Image Processing**  | Pillow                               | 10.0+   |
-| **Database**          | SQLite3                              | Default |
-| **Web Server**        | Django Development Server / Gunicorn | Latest  |
-| **Language**          | Python                               | 3.11+   |
+| Layer                 | Technology                   | Version |
+| --------------------- | ---------------------------- | ------- |
+| **Backend Framework** | Django                       | 4.2+    |
+| **Cryptography**      | cryptography (Fernet)        | 41.0+   |
+| **Image Processing**  | Pillow                       | 10.0+   |
+| **Database**          | SQLite3                      | Default |
+| **Web Server**        | Django Dev Server / Gunicorn | Latest  |
+| **Language**          | Python                       | 3.11+   |
 
 ---
 
@@ -127,12 +137,12 @@ A secure, production-ready Django web application for enterprise document manage
 - **Python 3.11+** installed on your system
 - **pip** package manager
 - **Git** (for cloning the repository)
-- **4GB RAM** minimum
-- **500MB** free disk space (media storage grows with uploads)
+- **4 GB RAM** minimum
+- **500 MB** free disk space (media storage grows with uploads)
 
 ### OS-Specific Requirements
 
-**Linux/macOS:**
+**Linux / macOS:**
 
 ```bash
 # Debian/Ubuntu
@@ -144,21 +154,20 @@ brew install python3
 
 **Windows:**
 
-- Download Python 3.11+ from [python.org](https://www.python.org/downloads/)
-- Ensure "Add Python to PATH" is checked during installation
+Download Python 3.11+ from [python.org](https://www.python.org/downloads/) and ensure **"Add Python to PATH"** is checked during installation.
 
 ---
 
 ## Installation
 
-### 1. Clone Repository
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/securevault.git
+git clone https://github.com/anim-michael-asante/securevault.git
 cd securevault
 ```
 
-### 2. Create Virtual Environment
+### 2. Create a Virtual Environment
 
 ```bash
 # Linux/macOS
@@ -177,13 +186,13 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### 4. Run Setup Script
+### 4. Run the Setup Script
 
 ```bash
 # Linux/macOS
 bash setup.sh
 
-# Windows (PowerShell)
+# Windows (PowerShell — run manually)
 python manage.py makemigrations core
 python manage.py migrate
 python manage.py shell -c "from core.models import User; User.objects.create_superuser(email='admin@securevault.com', password='admin123', first_name='Admin', last_name='User')"
@@ -216,35 +225,34 @@ Application available at: **http://127.0.0.1:8000**
 | **Password** | admin123              |
 | **Role**     | Administrator         |
 
-⚠️ **SECURITY WARNING**: Change the admin password immediately in production. See [Configuration](#configuration) section.
+> ⚠️ **Security Warning:** Change the admin password immediately before deploying to production. See [Configuration](#configuration).
 
 ### First Steps
 
 1. **Log in** with admin credentials
-2. **Navigate to Admin Dashboard**
-3. **Create new users** via "Manage Users" or let them self-register
+2. **Navigate** to the Admin Dashboard
+3. **Create users** via "Manage Users" or allow self-registration
 4. **Upload encrypted files** with department/role targeting
-5. **Test user access** by logging in with a regular user account
+5. **Test access** by logging in with a regular user account
 
 ---
 
 ## Configuration
 
-### Environment Setup
+### Environment Variables
 
-Create a `.env` file in the project root (or modify settings):
+Create a `.env` file in the project root:
 
-```bash
-# .env (optional, for future extensions)
+```env
 DEBUG=False
 ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
 SECRET_KEY=your-secret-key-here
 DATABASE_URL=sqlite:///db.sqlite3
+MASTER_PASSWORD=your-strong-random-password
+MASTER_SALT=your-random-salt
 ```
 
-### Modify Admin Credentials
-
-Edit [core/models.py](core/models.py) setup in `setup.sh` or use:
+### Change Admin Password
 
 ```bash
 python manage.py changepassword admin@securevault.com
@@ -252,30 +260,24 @@ python manage.py changepassword admin@securevault.com
 
 ### Master Encryption Key
 
-⚠️ **CRITICAL**: Update the master key in [core/encryption.py](core/encryption.py):
+> ⚠️ **Critical:** Update the master key in `core/encryption.py` before going to production.
 
 ```python
-# ❌ CHANGE THIS IN PRODUCTION ❌
-MASTER_PASSWORD = b"securevault-master-key-2025"  # Use a strong, random value
-MASTER_SALT = b"securevault-salt"                  # Use a random salt
-```
+# ❌ DO NOT USE IN PRODUCTION
+MASTER_PASSWORD = b"securevault-master-key-2025"
+MASTER_SALT = b"securevault-salt"
 
-**Recommended**: Use environment variables:
-
-```python
+# ✅ Use environment variables instead
 import os
-MASTER_PASSWORD = os.getenv('MASTER_PASSWORD', b'your-strong-password').encode()
-MASTER_SALT = os.getenv('MASTER_SALT', b'your-salt').encode()
+MASTER_PASSWORD = os.getenv('MASTER_PASSWORD').encode()
+MASTER_SALT = os.getenv('MASTER_SALT').encode()
 ```
 
-### Database Configuration
+### PostgreSQL (Production)
 
-Default: SQLite (`db.sqlite3`)
-
-For production, switch to PostgreSQL by modifying [securevault/settings.py](securevault/settings.py):
+Replace the default SQLite config in `securevault/settings.py`:
 
 ```python
-# PostgreSQL Configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -294,111 +296,101 @@ DATABASES = {
 
 ### Admin Workflow
 
-#### 1. Upload Encrypted Files
+**Upload Encrypted Files**
 
-1. Click **"Upload File"** in dashboard
+1. Click **"Upload File"** in the dashboard
 2. Select a file from your computer
 3. Enter title and description
-4. Choose **Department** (who)
-5. Choose **Role** (what access level)
-6. Click **"Encrypt & Upload"**
-7. File is AES-256 encrypted server-side and stored
+4. Choose **Department** and **Role** for access targeting
+5. Click **"Encrypt & Upload"** — file is AES-256 encrypted server-side
 
-#### 2. Manage Users
+**Manage Users**
 
 1. Go to **"Manage Users"**
 2. View all registered users with department/role
 3. **Suspend** users to block access without deletion
 4. **Activate** previously suspended users
-5. View user activity and last login
 
-#### 3. View Access Logs
+**View Access Logs**
 
-1. Check **download statistics** per file
-2. View **audit trail** showing who accessed what and when
-3. Monitor **suspicious access patterns**
+1. Check download statistics per file
+2. View the audit trail — who accessed what and when
+3. Monitor suspicious access patterns
 
 ### User Workflow
 
-#### 1. Register
+**Register**
 
-1. Click **"Register"** on login page
-2. Enter name, email, select department and role
-3. Create password
-4. Account active immediately (optional admin approval)
+1. Click **"Register"** on the login page
+2. Enter name, email, department, and role
+3. Create a password — account is active immediately
 
-#### 2. Log In & Browse Files
+**Browse & Download Files**
 
-1. Use email and password to log in
+1. Log in with email and password
 2. Dashboard shows only files matching your department + role
-3. Download counts and access logs visible
-
-#### 3. Download Files
-
-1. Click **"Download"** on any accessible file
-2. File is **automatically decrypted** server-side
-3. File downloads to your computer with original name
-4. Access logged with timestamp and IP address
+3. Click **"Download"** — file is decrypted on-the-fly and served with the original filename
+4. Every download is logged with timestamp and IP address
 
 ---
 
 ## Security
 
-### Encryption Scheme
+### Encryption Flow
 
-**File Encryption Process:**
+**Encryption:**
 
 ```
 Original File
     ↓
 [Generate unique Fernet key per file]
     ↓
-[Encrypt file with Fernet (AES-256)]
+[Encrypt file with Fernet (AES-256 CBC + HMAC)]
     ↓
-[Encrypt file key with Master Key (derived via PBKDF2)]
+[Encrypt file key with Master Key via PBKDF2-HMAC-SHA256]
     ↓
-[Store: encrypted file + encrypted file key on disk]
+[Store: encrypted blob + encrypted key → .vault file]
 ```
 
-**File Decryption Process:**
+**Decryption:**
 
 ```
-Encrypted File + Encrypted File Key (from disk)
+Encrypted File + Encrypted File Key
     ↓
 [Decrypt file key using Master Key]
     ↓
-[Decrypt file using decrypted file key]
+[Decrypt file using recovered file key]
     ↓
-[Serve to authorized user only]
+[Serve plaintext to authorized user only]
 ```
 
-### Key Security Practices
+### Implemented Security Controls
 
-✅ **Implemented:**
+| Control          | Implementation                         |
+| ---------------- | -------------------------------------- |
+| File Encryption  | AES-256 via Fernet (symmetric)         |
+| Key Derivation   | PBKDF2-HMAC-SHA256, 100,000 iterations |
+| Key Isolation    | Unique per-file key, never reused      |
+| Authentication   | Django session-based                   |
+| CSRF Protection  | Django CSRF middleware                 |
+| SQL Injection    | Django ORM parameterized queries       |
+| Password Storage | PBKDF2 with salt (Django default)      |
+| Audit Logging    | Timestamp + IP per download            |
 
-- **AES-256 Encryption**: Industry-standard symmetric encryption (Fernet)
-- **PBKDF2 Key Derivation**: 100,000 iterations, SHA-256 hash
-- **Unique Per-File Keys**: No key reuse across files
-- **Session-Based Authentication**: Django built-in session framework
-- **CSRF Protection**: Django CSRF middleware enabled
-- **SQL Injection Prevention**: Django ORM parameterized queries
-- **Password Hashing**: PBKDF2 with salt (Django default)
-- **Audit Logging**: All downloads recorded with timestamp/IP
-
-### Security Checklist for Production
+### Production Security Checklist
 
 - [ ] Change `MASTER_PASSWORD` and `MASTER_SALT` to strong random values
-- [ ] Set `DEBUG = False` in settings.py
-- [ ] Generate new `SECRET_KEY`
+- [ ] Set `DEBUG = False` in `settings.py`
+- [ ] Generate a new `SECRET_KEY`
 - [ ] Configure `ALLOWED_HOSTS` with your domain
-- [ ] Enable HTTPS (use reverse proxy like Nginx)
-- [ ] Use PostgreSQL instead of SQLite
-- [ ] Set secure session cookies: `SESSION_COOKIE_SECURE = True`
+- [ ] Enable HTTPS via Nginx reverse proxy
+- [ ] Switch to PostgreSQL
+- [ ] Set `SESSION_COOKIE_SECURE = True`
 - [ ] Enable HSTS: `SECURE_HSTS_SECONDS = 31536000`
 - [ ] Implement rate limiting on login
-- [ ] Regular backups of encrypted files and database
-- [ ] Regular security audits of access logs
-- [ ] Consider implementing 2FA for admin accounts
+- [ ] Set up automated backups
+- [ ] Enable audit log monitoring
+- [ ] Consider 2FA for admin accounts
 
 ---
 
@@ -406,102 +398,94 @@ Encrypted File + Encrypted File Key (from disk)
 
 ```
 securevault/
-├── manage.py                          # Django management script
-├── db.sqlite3                         # SQLite database
-├── requirements.txt                   # Python dependencies
-├── setup.sh                           # Automated setup script
-├── README.md                          # This file
+├── manage.py                       # Django management script
+├── db.sqlite3                      # SQLite database
+├── requirements.txt                # Python dependencies
+├── setup.sh                        # Automated setup script
+├── README.md
 │
-├── securevault/                       # Main Django app config
-│   ├── __init__.py
-│   ├── settings.py                    # Django settings & configuration
-│   ├── urls.py                        # Main URL routing
-│   └── wsgi.py                        # WSGI entry point
+├── securevault/                    # Django project config
+│   ├── settings.py                 # Settings & configuration
+│   ├── urls.py                     # Main URL routing
+│   └── wsgi.py                     # WSGI entry point
 │
-├── core/                              # Core application logic
-│   ├── __init__.py
-│   ├── admin.py                       # Django admin customization
-│   ├── apps.py                        # App configuration
-│   ├── models.py                      # Database models (User, EncryptedFile, FileAccessLog)
-│   ├── views.py                       # View functions (authentication, upload, download)
-│   ├── forms.py                       # Django forms (Login, Register, Upload)
-│   ├── encryption.py                  # AES-256 encryption/decryption utilities
-│   ├── urls.py                        # App-level URL routing
-│   │
-│   ├── migrations/                    # Database migrations
-│   │   ├── __init__.py
+├── core/                           # Core application
+│   ├── models.py                   # User, EncryptedFile, FileAccessLog
+│   ├── views.py                    # Auth, upload, download logic
+│   ├── forms.py                    # Login, Register, Upload forms
+│   ├── encryption.py               # AES-256 encrypt/decrypt utilities
+│   ├── urls.py                     # App-level URL routing
+│   ├── admin.py                    # Django admin customization
+│   ├── migrations/
 │   │   └── 0001_initial.py
-│   │
-│   └── templates/core/                # HTML templates
-│       ├── base.html                  # Base template with navigation
-│       ├── login.html                 # Login page
-│       ├── register.html              # User registration
-│       ├── admin_dashboard.html       # Admin control panel
-│       ├── base_dashboard.html        # Shared dashboard base
-│       ├── manage_users.html          # User management interface
-│       ├── upload_file.html           # File upload form
-│       └── user_dashboard.html        # User file access portal
+│   └── templates/core/
+│       ├── base.html
+│       ├── login.html
+│       ├── register.html
+│       ├── admin_dashboard.html
+│       ├── manage_users.html
+│       ├── upload_file.html
+│       └── user_dashboard.html
 │
-├── static/                            # Static files
-│   └── core/
-│       ├── css/                       # Stylesheets
-│       └── js/                        # JavaScript
+├── static/core/
+│   ├── css/
+│   └── js/
 │
-└── media/                             # User-uploaded encrypted files
-    └── encrypted_files/               # Encrypted files storage
-        └── enc_*.vault                # Encrypted file format
+└── media/
+    └── encrypted_files/
+        └── enc_*.vault             # Encrypted file storage
 ```
 
 ---
 
 ## Database Schema
 
-### User Model
+### User
 
 ```
 User
-├── id (AutoField, Primary Key)
-├── email (EmailField, Unique)
-├── password (CharField, hashed)
-├── first_name (CharField)
-├── last_name (CharField)
-├── department (CharField, choices: 8 departments)
-├── role (CharField, choices: 9 roles)
-├── is_active (BooleanField)
-├── is_staff (BooleanField)
-├── is_superuser (BooleanField)
-├── date_joined (DateTimeField)
-└── last_login (DateTimeField)
+├── id                (AutoField, PK)
+├── email             (EmailField, unique)
+├── password          (CharField, hashed)
+├── first_name        (CharField)
+├── last_name         (CharField)
+├── department        (CharField, 8 choices)
+├── role              (CharField, 9 choices)
+├── is_active         (BooleanField)
+├── is_staff          (BooleanField)
+├── is_superuser      (BooleanField)
+├── date_joined       (DateTimeField)
+└── last_login        (DateTimeField)
 ```
 
-### EncryptedFile Model
+### EncryptedFile
 
 ```
 EncryptedFile
-├── id (AutoField, Primary Key)
-├── uploaded_by (ForeignKey → User)
-├── title (CharField)
-├── description (TextField)
-├── department_access (CharField, choices: 8 departments)
-├── role_access (CharField, choices: 9 roles)
-├── file_blob (BinaryField, encrypted)
-├── encrypted_file_key (BinaryField, encrypted key)
+├── id                (AutoField, PK)
+├── uploaded_by       (ForeignKey → User)
+├── title             (CharField)
+├── description       (TextField)
+├── department_access (CharField, 8 choices)
+├── role_access       (CharField, 9 choices)
+├── file_blob         (BinaryField, encrypted)
+├── encrypted_file_key(BinaryField, encrypted key)
 ├── original_filename (CharField)
-├── upload_date (DateTimeField, auto_now_add)
-├── download_count (IntegerField, default=0)
-└── file_size (IntegerField, bytes)
+├── upload_date       (DateTimeField, auto_now_add)
+├── download_count    (IntegerField, default=0)
+└── file_size         (IntegerField, bytes)
 ```
 
-### FileAccessLog Model
+### FileAccessLog
 
 ```
 FileAccessLog
-├── id (AutoField, Primary Key)
-├── user (ForeignKey → User)
-├── encrypted_file (ForeignKey → EncryptedFile)
-├── accessed_at (DateTimeField, auto_now_add)
-├── ip_address (GenericIPAddressField)
-└── user_agent (TextField)
+├── id                (AutoField, PK)
+├── user              (ForeignKey → User)
+├── encrypted_file    (ForeignKey → EncryptedFile)
+├── accessed_at       (DateTimeField, auto_now_add)
+├── ip_address        (GenericIPAddressField)
+└── user_agent        (TextField)
 ```
 
 ---
@@ -512,73 +496,60 @@ FileAccessLog
 
 | Method | Endpoint     | Description             |
 | ------ | ------------ | ----------------------- |
-| GET    | `/login/`    | Login page              |
-| POST   | `/login/`    | Process login           |
-| GET    | `/register/` | Registration page       |
-| POST   | `/register/` | Create new user account |
-| GET    | `/logout/`   | Logout user             |
+| `GET`  | `/login/`    | Login page              |
+| `POST` | `/login/`    | Process login           |
+| `GET`  | `/register/` | Registration page       |
+| `POST` | `/register/` | Create new user account |
+| `GET`  | `/logout/`   | Logout user             |
 
 ### Admin Panel
 
-| Method | Endpoint               | Description                  |
-| ------ | ---------------------- | ---------------------------- |
-| GET    | `/admin-dashboard/`    | Admin control panel          |
-| POST   | `/upload-file/`        | Upload and encrypt file      |
-| GET    | `/manage-users/`       | User management interface    |
-| POST   | `/suspend-user/<id>/`  | Suspend user account         |
-| POST   | `/activate-user/<id>/` | Reactivate user account      |
-| GET    | `/access-logs/`        | View file access audit trail |
+| Method | Endpoint               | Description               |
+| ------ | ---------------------- | ------------------------- |
+| `GET`  | `/admin-dashboard/`    | Admin control panel       |
+| `POST` | `/upload-file/`        | Upload and encrypt file   |
+| `GET`  | `/manage-users/`       | User management interface |
+| `POST` | `/suspend-user/<id>/`  | Suspend user account      |
+| `POST` | `/activate-user/<id>/` | Reactivate user account   |
+| `GET`  | `/access-logs/`        | File access audit trail   |
 
 ### User Portal
 
 | Method | Endpoint               | Description               |
 | ------ | ---------------------- | ------------------------- |
-| GET    | `/user-dashboard/`     | User file listing         |
-| GET    | `/download/<file_id>/` | Download and decrypt file |
-| GET    | `/my-activity/`        | User's access history     |
+| `GET`  | `/user-dashboard/`     | User file listing         |
+| `GET`  | `/download/<file_id>/` | Download and decrypt file |
+| `GET`  | `/my-activity/`        | User's access history     |
 
-### Admin API (JSON)
+### Admin JSON API
 
-| Method | Endpoint          | Description                 |
-| ------ | ----------------- | --------------------------- |
-| GET    | `/api/users/`     | List all users (admin only) |
-| GET    | `/api/files/`     | List all files (admin only) |
-| GET    | `/api/logs/`      | Audit logs (admin only)     |
-| DELETE | `/api/user/<id>/` | Delete user (admin only)    |
+| Method   | Endpoint          | Description                 |
+| -------- | ----------------- | --------------------------- |
+| `GET`    | `/api/users/`     | List all users (admin only) |
+| `GET`    | `/api/files/`     | List all files (admin only) |
+| `GET`    | `/api/logs/`      | Audit logs (admin only)     |
+| `DELETE` | `/api/user/<id>/` | Delete user (admin only)    |
 
 ---
 
 ## Development
 
-### Running in Development Mode
+### Run Development Server
 
 ```bash
-# Activate virtual environment
-source .venv/bin/activate  # Linux/macOS
-# or
-.\.venv\Scripts\Activate.ps1  # Windows
+source .venv/bin/activate       # Linux/macOS
+.\.venv\Scripts\Activate.ps1    # Windows
 
-# Run development server with auto-reload
 python manage.py runserver
-
-# Run with custom port
-python manage.py runserver 8080
+python manage.py runserver 8080  # Custom port
 ```
 
 ### Database Migrations
 
 ```bash
-# Create new migrations after model changes
-python manage.py makemigrations core
-
-# Apply pending migrations
-python manage.py migrate
-
-# View migration status
-python manage.py showmigrations core
-
-# Reverse to previous migration
-python manage.py migrate core 0001_initial
+python manage.py makemigrations core   # Create migrations
+python manage.py migrate               # Apply migrations
+python manage.py showmigrations core   # View status
 ```
 
 ### Interactive Shell
@@ -586,68 +557,40 @@ python manage.py migrate core 0001_initial
 ```bash
 python manage.py shell
 
-# Example commands:
 from core.models import User, EncryptedFile
 User.objects.all()
 EncryptedFile.objects.filter(department_access='engineering')
 ```
 
-### Running Tests
+### Tests
 
 ```bash
-# Run all tests
-python manage.py test
-
-# Run specific test file
-python manage.py test core.tests.UserTestCase
-
-# Verbose output
-python manage.py test -v 2
+python manage.py test               # Run all tests
+python manage.py test core.tests    # Run specific tests
+python manage.py test -v 2          # Verbose output
 ```
 
 ### Code Style
 
 ```bash
-# Format code with Black
-black core/
-
-# Lint with Flake8
-flake8 core/
+black core/     # Format with Black
+flake8 core/    # Lint with Flake8
 ```
 
 ---
 
 ## Deployment
 
-### Production Checklist
-
-- [ ] Update all default credentials
-- [ ] Change MASTER_PASSWORD and MASTER_SALT
-- [ ] Set DEBUG=False
-- [ ] Generate new SECRET_KEY
-- [ ] Configure ALLOWED_HOSTS
-- [ ] Set up HTTPS/SSL certificate
-- [ ] Use PostgreSQL (not SQLite)
-- [ ] Set up environment variables
-- [ ] Configure static file serving (Nginx/Apache)
-- [ ] Set up regular backups
-- [ ] Configure logging and monitoring
-
-### Using Gunicorn
+### Gunicorn
 
 ```bash
-# Install Gunicorn
 pip install gunicorn
 
-# Run with Gunicorn
-gunicorn securevault.wsgi:application --bind 0.0.0.0:8000 --workers 4
-
-# Use environment variables
 export MASTER_PASSWORD="your-strong-key"
-gunicorn securevault.wsgi:application --bind 0.0.0.0:8000
+gunicorn securevault.wsgi:application --bind 0.0.0.0:8000 --workers 4
 ```
 
-### Using Nginx Reverse Proxy
+### Nginx Reverse Proxy
 
 ```nginx
 server {
@@ -671,9 +614,7 @@ server {
 }
 ```
 
-### Docker Deployment
-
-Create `Dockerfile`:
+### Docker
 
 ```dockerfile
 FROM python:3.11-slim
@@ -693,71 +634,22 @@ docker run -p 8000:8000 securevault:latest
 
 ## Troubleshooting
 
-### Common Issues
+| Error                         | Fix                                                                           |
+| ----------------------------- | ----------------------------------------------------------------------------- |
+| `No module named 'django'`    | Activate virtual environment: `source .venv/bin/activate`                     |
+| `No such table: core_user`    | Run `python manage.py migrate`                                                |
+| `CSRF verification failed`    | Clear browser cookies; ensure `{% csrf_token %}` in forms                     |
+| `Permission denied` on upload | Run `mkdir -p media/encrypted_files && chmod 755 media/encrypted_files`       |
+| Static files not loading      | Run `python manage.py collectstatic --noinput`                                |
+| `Decryption failed`           | Verify `MASTER_PASSWORD` and `MASTER_SALT` match original encryption settings |
 
-#### 1. ModuleNotFoundError: No module named 'django'
-
-```bash
-# Activate virtual environment
-source .venv/bin/activate  # Linux/macOS
-.\.venv\Scripts\Activate.ps1  # Windows
-
-# Reinstall dependencies
-pip install -r requirements.txt
-```
-
-#### 2. "No such table: core_user"
-
-```bash
-# Run migrations
-python manage.py migrate
-```
-
-#### 3. "CSRF verification failed"
-
-- Clear browser cookies for localhost
-- Ensure CSRF middleware is enabled in settings.py
-- Check that forms include `{% csrf_token %}`
-
-#### 4. File upload fails / "Permission denied"
-
-```bash
-# Ensure media directory exists and is writable
-mkdir -p media/encrypted_files
-chmod 755 media/encrypted_files
-```
-
-#### 5. Static files not loading
-
-```bash
-# Collect static files
-python manage.py collectstatic --noinput
-```
-
-#### 6. "Decryption failed" error
-
-- Verify MASTER_PASSWORD and MASTER_SALT match original encryption
-- Check encrypted file not corrupted
-- Ensure master key hasn't changed
-
-### Debug Mode
-
-Enable detailed error messages (development only):
+### Enable Debug Logging
 
 ```python
-# securevault/settings.py
+# securevault/settings.py — development only
 DEBUG = True
 ALLOWED_HOSTS = ['*']
-```
 
-⚠️ Never enable DEBUG in production!
-
-### Logs
-
-Check Django logs:
-
-```bash
-# Enable file logging in settings.py
 LOGGING = {
     'version': 1,
     'handlers': {
@@ -770,79 +662,65 @@ LOGGING = {
 }
 ```
 
+> ⚠️ Never enable `DEBUG = True` in production.
+
 ---
 
 ## Departments & Roles
 
-### 8 Supported Departments
+### 8 Departments
 
-1. **Engineering** - Product development, DevOps, QA
-2. **Marketing** - Brand, content, campaigns
-3. **Finance** - Accounting, budgeting, analysis
-4. **Human Resources** - Recruitment, benefits, payroll
-5. **Operations** - Supply chain, facilities, admin
-6. **Legal** - Contracts, compliance, counsel
-7. **Sales** - Business development, account management
-8. **Executive** - C-suite, board, strategic
+| Department      | Typical Teams                    |
+| --------------- | -------------------------------- |
+| Engineering     | DevOps, QA, Product Dev          |
+| Marketing       | Brand, Content, Campaigns        |
+| Finance         | Accounting, Budgeting, Analysis  |
+| Human Resources | Recruitment, Benefits, Payroll   |
+| Operations      | Supply Chain, Facilities, Admin  |
+| Legal           | Contracts, Compliance, Counsel   |
+| Sales           | Business Dev, Account Management |
+| Executive       | C-Suite, Board, Strategic        |
 
-### 9 Supported Roles
+### 9 Roles
 
-1. **Intern** - Entry level, learning
-2. **Junior** - Early career (0-3 years)
-3. **Mid-level** - Mid career (3-7 years)
-4. **Senior** - Experienced (7+ years)
-5. **Lead** - Team lead, mentor
-6. **Manager** - Department manager, 5-20 reports
-7. **Director** - Director level, 20+ reports
-8. **Vice President** - VP, strategic responsibility
-9. **C-Level** - CTO, CFO, CEO, etc.
+| Role           | Experience Level         |
+| -------------- | ------------------------ |
+| Intern         | Entry level              |
+| Junior         | 0–3 years                |
+| Mid-level      | 3–7 years                |
+| Senior         | 7+ years                 |
+| Lead           | Team lead / mentor       |
+| Manager        | 5–20 direct reports      |
+| Director       | 20+ direct reports       |
+| Vice President | Strategic responsibility |
+| C-Level        | CTO, CFO, CEO, etc.      |
 
 ---
 
 ## Contributing
 
-We welcome contributions! Please follow these guidelines:
-
 1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/your-feature`)
-3. **Commit** changes with clear messages
-4. **Push** to branch
-5. **Create** a Pull Request
+2. **Create** a feature branch — `git checkout -b feature/your-feature`
+3. **Commit** with a clear message — `git commit -m "feat: add X"`
+4. **Push** to your branch — `git push origin feature/your-feature`
+5. **Open** a Pull Request
 
-### Code Style
-
-- Follow PEP 8
-- Use 4-space indentation
-- Write docstrings for functions
-- Keep functions small and focused
+Follow PEP 8, use 4-space indentation, and write docstrings for all functions.
 
 ---
 
 ## License
 
-This project is licensed under the **MIT License** - see LICENSE file for details.
-
----
-
-## Support
-
-For issues, questions, or suggestions:
-
-- 📧 Email: support@securevault.io
-- 🐛 Report bugs on GitHub Issues
-- 💬 Discussions: GitHub Discussions tab
+This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
 ## Acknowledgments
 
-- Django Framework
-- cryptography library (Fernet)
-- Python community
+- [Django](https://www.djangoproject.com/) — Web framework
+- [cryptography](https://cryptography.io/) — Fernet AES-256 implementation
+- Python open-source community
 
 ---
 
-**Made with ❤️ | Last Updated: May 2026**
-#   S e c u r e V a u l t - R o l e - B a s e d - E n c r y p t e d - F i l e - P o r t a l 
- 
- 
+<p align="center">Made with ❤️ by <a href="https://github.com/anim-michael-asante">0x1aerixis</a> · Last Updated: May 2026</p>
